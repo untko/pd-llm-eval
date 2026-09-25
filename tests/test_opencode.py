@@ -1,3 +1,6 @@
+import json
+
+from pd_llm_eval.kb import KnowledgeBase
 from pd_llm_eval.models import EvalCase
 from pd_llm_eval.opencode_runner import build_prompt, run_opencode_batch
 
@@ -46,3 +49,33 @@ def test_opencode_dry_run_does_not_call_binary(tmp_path):
 
     assert summary["cases"] == 1
     assert summary["jobs"] == 1
+
+def test_oracle_prompt_prefers_actual_kb_source(tmp_path):
+    kb_path = tmp_path / "kb.json"
+    kb_path.write_text(
+        json.dumps(
+            [
+                {
+                    "code": "ABC",
+                    "title_en": "Example",
+                    "subtopics": [
+                        {
+                            "id": "ABC/1-How_to",
+                            "name": "How to",
+                            "content": "Authoritative source says five tablespoons.",
+                        }
+                    ],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    data = _case().model_dump()
+    data["gold_sources"] = [{"source_id": "ABC/1-How_to"}]
+    data["required_facts"] = ["Legacy fact says four tablespoons."]
+    case = EvalCase.model_validate(data)
+
+    prompt = build_prompt(case, "oracle", KnowledgeBase(kb_path))
+
+    assert "five tablespoons" in prompt
+    assert "Legacy fact says four tablespoons." not in prompt
