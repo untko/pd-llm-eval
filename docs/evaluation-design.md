@@ -6,20 +6,66 @@ A case represents one user request plus any prior conversational context and the
 
 The canonical dataset is vendor-neutral. Platform-specific representations are generated from it rather than becoming the source of truth.
 
-## Test taxonomy
+## Three independent taxonomies
 
-- `factual_qa`: direct answer grounded in approved knowledge
-- `retrieval`: correct evidence/chunk must be found
-- `multi_turn`: prior conversational context matters
-- `clarification`: information is insufficient and the bot should ask
-- `abstention`: the bot should explicitly avoid unsupported claims
-- `tool_call`: correct tool and arguments matter
-- `routing`: correct intent, agent, or workflow must be selected
-- `safety`: harmful or prohibited guidance must be avoided
-- `robustness`: typos, code-switching, vague phrasing, prompt attacks
-- `edge_case`: conflicting sources, stale data, unusual states
+The source evaluation workbook shows that one `case_type` is too lossy. Keep three axes separate.
 
-Use one primary `case_type` and additional `tags` for overlapping properties.
+### 1. Behavior label
+
+What kind of request is this?
+
+- `answerable`
+- `underspecified`
+- `out_of_kb`
+- `near_miss`
+- `social`
+- `escalate`
+
+### 2. Expected action
+
+What should the assistant do?
+
+- `answerable` -> `answer`
+- `underspecified` -> `clarify`
+- `out_of_kb` -> `abstain`
+- `near_miss` -> `abstain`
+- `social` -> `no_retrieval`
+- `escalate` -> `escalate`
+
+These pairs are validated by the canonical schema.
+
+### 3. Evaluation focus
+
+What capability or failure mode are we probing?
+
+Examples:
+
+- `retrieval`
+- `generation`
+- `multi_turn`
+- `ambiguity`
+- `routing`
+- `tool_use`
+- `robustness`
+- `safety`
+- `domain_reasoning`
+- `numeric_handling`
+- `keyword_conflict`
+- `near_miss`
+
+A case may have multiple evaluation-focus values.
+
+## Domain taxonomy
+
+Agriculture metadata is also independent of behavior. Preserve the existing hierarchy where available:
+
+`category -> crop_group -> topic_code/topic_title -> level -> subtopic`
+
+This lets us answer questions such as:
+
+- Does the system fail more on crop protection than farm extension?
+- Are failures concentrated in one crop?
+- Does subtopic retrieval degrade as similar crop FAQs are added?
 
 ## Scoring
 
@@ -27,7 +73,7 @@ The default rubric is in `config/rubric.yaml`.
 
 Use three layers:
 
-1. Deterministic assertions where possible, such as expected tool name, required fields, forbidden strings, source IDs, latency, or schema validity.
+1. Deterministic assertions where possible, such as expected action, expected tool name, required fields, forbidden strings, source IDs, latency, or schema validity.
 2. LLM-as-judge for semantic criteria such as correctness, groundedness, completeness, and clarity.
 3. Human review for calibration, disputed cases, and high-risk failures.
 
@@ -37,17 +83,47 @@ A single reference answer is evidence, not the only valid wording.
 
 Hard failures are reported separately from the numerical score. A fluent answer with a critical hallucination should not be hidden by a high average score.
 
+For this agriculture assistant, also treat these as important failure classes:
+
+- wrong crop
+- wrong topic/disease
+- wrong dosage or numeric value
+- relevant-sounding but unsupported answer
+- failure to clarify an ambiguous crop/input request
+- retrieval of a generic practice article when the user is asking for diagnosis
+
+## Dataset quality tiers
+
+Do not treat every existing reference answer as equally authoritative.
+
+Recommended roles:
+
+- **gold**: human/expert-verified response or expected behavior
+- **silver**: model-generated/reference response that passed automated review but has not been human-verified
+- **behavior-only**: cases such as social, clarify, abstain, or escalate where the action matters more than a reference answer
+- **regression**: a known production failure retained permanently after the expected behavior is verified
+
+Use metadata/dataset membership to record these roles.
+
 ## Dataset construction
 
-Start with 10-30 cases:
+The existing workbook is large enough to seed the benchmark, but the first runnable suite should remain small and interpretable.
 
-- common/golden paths
-- at least one case per route/workflow
-- at least one case per tool
-- clarification and abstention cases
-- 2-3 adversarial/robustness cases
+Start with 20-30 cases covering:
 
-Grow toward 100-200 representative cases after the first baseline. Prefer real user conversations, then add expert-authored edge cases. Synthetic generation is useful for coverage expansion but should not define the entire benchmark.
+- every behavior label
+- common/golden answerable paths
+- several crops and domain categories
+- symptom-based disease retrieval
+- ambiguity requiring clarification
+- near-miss and out-of-KB abstention
+- social messages that should bypass retrieval
+- escalation requests
+- numeric/dosage questions
+- typo/encoding/noisy Burmese
+- keyword-conflict cases
+
+Then create a larger regression/coverage suite from the remaining curated data.
 
 Every meaningful production failure should become a regression case.
 
@@ -60,4 +136,5 @@ When comparing Yellow.ai, ChatbotX, or a custom stack:
 - record model/provider and configuration
 - repeat stochastic cases multiple times
 - report quality, hard-fail rate, latency, and cost separately
+- report results by behavior label, evaluation focus, crop, category, and provenance
 - do not collapse everything into one leaderboard number
