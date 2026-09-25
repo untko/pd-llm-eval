@@ -22,6 +22,7 @@ docs/
   yellow-ai.md                Yellow.ai compatibility boundary
   running-yellow.md           batch execution against Yellow.ai
   running-opencode.md         local model evaluation through OpenCode
+  source-grounding.md         use the actual private KB as oracle evidence
 examples/
   example_cases.jsonl         schema examples, not production benchmark cases
 datasets/
@@ -132,3 +133,19 @@ open results/model-smoke-3.md
 ```
 
 The report includes a compact case table plus full error messages when a run fails.
+
+
+## Actual KB grounding
+
+Answerable cases can cite real KB sections through `gold_sources`. Point the runner at the private team's parsed KB:
+
+```bash
+export PD_KB_PATH=../llm-judge/data/kb_structure.json
+
+pd-eval validate-sources datasets/private/core_v1/cases.json \
+  --kb "$PD_KB_PATH"
+```
+
+In `--mode oracle`, cited KB text takes precedence over legacy `required_facts` or model-generated reference answers. See `docs/source-grounding.md`.
+
+Production-derived benchmark files belong under `datasets/private/`, which is gitignored.
