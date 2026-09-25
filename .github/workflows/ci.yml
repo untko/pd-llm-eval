@@ -25,3 +25,5 @@ jobs:
           for file in datasets/smoke_v1/*.jsonl; do
             pd-eval validate "$file"
           done
+      - name: Dry-run smoke batch
+        run: pd-eval run-yellow datasets/smoke_v1 --dry-run
