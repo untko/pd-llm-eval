@@ -1,6 +1,7 @@
 from typing import Any, Literal, Self
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field
+from pydantic.functional_validators import model_validator
 
 
 BehaviorLabel = Literal[
