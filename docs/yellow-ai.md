@@ -21,10 +21,10 @@ The conceptual mapping is implemented in `src/pd_llm_eval/adapters/yellow.py`:
 | `name` | Name |
 | prior user turns + `user_input` | User inputs |
 | `initial_state` | Initial state |
-| `expected_behavior` plus assertions | Expected outcome |
+| `expected_action` + `expected_behavior` + assertions | Expected outcome |
 | `case_id` | Source reference |
 
-Fields such as required facts, forbidden claims, expected tool calls, gold sources, tags, provenance, and grading notes remain in the canonical dataset even when Yellow.ai cannot represent them directly.
+Behavior labels, evaluation-focus tags, domain taxonomy, curation provenance, required facts, forbidden claims, expected tool calls, and gold sources remain in the canonical dataset even when Yellow.ai cannot represent them directly.
 
 ## Why this boundary matters
 
