@@ -22,6 +22,8 @@ docs/
   yellow-ai.md                Yellow.ai compatibility boundary
 examples/
   example_cases.jsonl         schema examples, not production benchmark cases
+datasets/
+  smoke_v1/                   30-case initial benchmark
 src/pd_llm_eval/
   models.py                   canonical case schema
   io.py                       JSONL validation/loading
@@ -76,10 +78,10 @@ uv run pd-eval validate examples/example_cases.jsonl
 
 ## Initial plan
 
-1. Define the canonical case schema and scoring rubric.
-2. Curate a small 10-30 case smoke/regression set.
+1. Define the canonical case schema and scoring rubric. ✓
+2. Curate a 30-case smoke/regression set. ✓
 3. Run a Yellow.ai baseline.
 4. Add target adapters for alternative stacks.
 5. Expand toward 100-200 representative cases from real conversations.
 
-The next substantive step is dataset curation, not adding more framework code.
+The smoke suite currently contains 16 answerable, 4 clarification, 3 out-of-KB, 3 near-miss, 2 social, and 2 escalation cases. See `datasets/smoke_v1/README.md`.
