@@ -18,7 +18,10 @@ def to_yellow_concept(case: EvalCase) -> dict[str, Any]:
     ]
     user_inputs.append(case.user_input)
 
-    expected_outcome = list(case.expected_behavior)
+    expected_outcome = [
+        f"Expected action: {case.expected_action}",
+        *case.expected_behavior,
+    ]
     expected_outcome.extend(f"Must include fact: {fact}" for fact in case.required_facts)
     expected_outcome.extend(
         f"Must not claim: {claim}" for claim in case.forbidden_claims
