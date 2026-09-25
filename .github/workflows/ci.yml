@@ -20,3 +20,8 @@ jobs:
         run: pytest -q
       - name: Validate example dataset
         run: pd-eval validate examples/example_cases.jsonl
+      - name: Validate smoke suite
+        run: |
+          for file in datasets/smoke_v1/*.jsonl; do
+            pd-eval validate "$file"
+          done
