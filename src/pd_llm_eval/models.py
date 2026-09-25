@@ -83,6 +83,7 @@ class CurationMetadata(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     source_type: typing.Literal["real", "generated"] | None = None
+    quality_tier: typing.Literal["gold", "silver", "behavior-only", "regression"] | None = None
     selection: typing.Literal["census", "real-census", "representative", "spanning"] | None = None
     kb_overlap: float | None = None
     kb_longest_span: float | None = None
