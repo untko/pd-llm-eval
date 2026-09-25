@@ -121,3 +121,14 @@ pd-eval judge-opencode datasets/smoke_v1/cases.json results/model-smoke-3.jsonl 
 ```
 
 See `docs/running-opencode.md` for oracle vs closed-book mode and multi-model batch runs.
+
+## Read results
+
+Raw runs are JSONL for machine processing. Generate a human-readable Markdown report with:
+
+```bash
+pd-eval report results/model-smoke-3.jsonl --out results/model-smoke-3.md
+open results/model-smoke-3.md
+```
+
+The report includes a compact case table plus full error messages when a run fails.
