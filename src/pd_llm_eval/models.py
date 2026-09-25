@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Any, Literal
+from typing import Any, Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -138,7 +136,7 @@ class EvalCase(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     @model_validator(mode="after")
-    def validate_behavior_action(self) -> "EvalCase":
+    def validate_behavior_action(self) -> Self:
         expected_by_label: dict[str, str] = {
             "answerable": "answer",
             "underspecified": "clarify",
