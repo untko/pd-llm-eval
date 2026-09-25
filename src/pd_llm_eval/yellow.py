@@ -10,29 +10,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
-from .io import load_jsonl
+from .io import load_dataset
 from .models import EvalCase
 
 
 _TEXT_KEYS = ("text", "message", "content", "response", "answer")
-
-
-def load_dataset(path: str | Path) -> list[EvalCase]:
-    """Load one JSONL file or every JSONL file in a directory."""
-    path = Path(path)
-    files = [path] if path.is_file() else sorted(path.glob("*.jsonl"))
-    if not files:
-        raise ValueError(f"No JSONL files found at {path}")
-
-    cases: list[EvalCase] = []
-    seen: set[str] = set()
-    for file in files:
-        for case in load_jsonl(file):
-            if case.case_id in seen:
-                raise ValueError(f"duplicate case_id across dataset: {case.case_id!r}")
-            seen.add(case.case_id)
-            cases.append(case)
-    return cases
 
 
 def _read_path(payload: Any, path: str) -> Any:

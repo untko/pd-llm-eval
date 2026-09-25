@@ -21,10 +21,11 @@ docs/
   evaluation-design.md        methodology and dataset construction
   yellow-ai.md                Yellow.ai compatibility boundary
   running-yellow.md           batch execution against Yellow.ai
+  running-opencode.md         local model evaluation through OpenCode
 examples/
   example_cases.jsonl         schema examples, not production benchmark cases
 datasets/
-  smoke_v1/                   30-case initial benchmark
+  smoke_v1/                   30-case initial benchmark; cases.json is editable source
 src/pd_llm_eval/
   models.py                   canonical case schema
   io.py                       JSONL validation/loading
@@ -37,7 +38,7 @@ tests/
 ## Canonical data flow
 
 ```text
-canonical JSONL
+human-editable cases.json
     |
     +--> Yellow.ai adapter
     +--> alternative platform adapter
@@ -81,9 +82,10 @@ uv run pd-eval validate examples/example_cases.jsonl
 
 1. Define the canonical case schema and scoring rubric. ✓
 2. Curate a 30-case smoke/regression set. ✓
-3. Run a Yellow.ai baseline.
-4. Add target adapters for alternative stacks.
-5. Expand toward 100-200 representative cases from real conversations.
+3. Run local model baselines through OpenCode.
+4. Run a Yellow.ai end-to-end baseline.
+5. Add target adapters for alternative stacks.
+6. Expand toward 100-200 representative cases from real conversations.
 
 The smoke suite currently contains 16 answerable, 4 clarification, 3 out-of-KB, 3 near-miss, 2 social, and 2 escalation cases. See `datasets/smoke_v1/README.md`.
 
@@ -102,3 +104,20 @@ bash scripts/run_yellow_smoke.sh
 ```
 
 See `docs/running-yellow.md` for one-case testing, response-path configuration, concurrency, and repeated runs.
+
+## Run local model baselines
+
+The human-editable smoke suite is `datasets/smoke_v1/cases.json`.
+
+```bash
+opencode models
+pd-eval run-opencode datasets/smoke_v1/cases.json --model PROVIDER/MODEL --limit 3 --out results/model-smoke-3.jsonl
+```
+
+Then judge with a different model when practical:
+
+```bash
+pd-eval judge-opencode datasets/smoke_v1/cases.json results/model-smoke-3.jsonl --model PROVIDER/JUDGE_MODEL --out results/model-smoke-3-judged.jsonl
+```
+
+See `docs/running-opencode.md` for oracle vs closed-book mode and multi-model batch runs.

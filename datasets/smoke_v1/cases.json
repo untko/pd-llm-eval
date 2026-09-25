@@ -1,0 +1,1544 @@
+[
+  {
+    "case_id": "smoke.abstain.herbicide.021",
+    "name": "Abstain on unsupported paddy herbicide recommendation",
+    "language": "my",
+    "user_input": "စပါးခင်းထဲ့မှာပေါင်းပင်တွေများနေလို့ပေါင်းတပ့်ဆေးရှိပါတလား",
+    "behavior_label": "out_of_kb",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "routing",
+      "safety"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "State that the approved KB does not support a specific herbicide recommendation."
+    ],
+    "forbidden_claims": [
+      "Do not name or dose an unsupported herbicide."
+    ],
+    "evaluation_rules": [
+      "Do not answer from general model knowledge."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "out-of-kb",
+      "paddy",
+      "herbicide"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.abstain.ornamental.022",
+    "name": "Abstain on unsupported ornamental-tree flowering query",
+    "language": "my",
+    "user_input": "ကံ့ကော်ပင်အဖူးပါအောင်ဘာသုံးရမလဲရှင့်",
+    "behavior_label": "out_of_kb",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "routing"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "State that the ornamental-tree flowering question is outside the approved KB."
+    ],
+    "forbidden_claims": [],
+    "evaluation_rules": [
+      "Do not improvise fertilizer advice."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "out-of-kb",
+      "ornamental"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.abstain.papaya.023",
+    "name": "Abstain on unsupported papaya diagnosis",
+    "language": "my",
+    "user_input": "သင်္ဘောရွက်အလယ်ကနေ အတက်ထပ်ထွက်နေတာဘာဖြစ်လို့များလဲ",
+    "behavior_label": "out_of_kb",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "routing",
+      "domain_reasoning"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "State that the KB does not support diagnosing this papaya symptom."
+    ],
+    "forbidden_claims": [
+      "Do not assign a specific disease without a supported source."
+    ],
+    "evaluation_rules": [
+      "Do not fabricate a disease diagnosis."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "out-of-kb",
+      "papaya"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.andl.diagnosis.001",
+    "name": "Diagnose chili dieback from branch-tip symptoms",
+    "language": "my",
+    "user_input": "ငရုတ်ကိုင်းတွေ ထိပ်ဖျားကစပြီး ကိုင်းဆုံအထိခြောက်လာတယ်။ ဘာရောဂါဖြစ်နိုင်လဲ။",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "domain_reasoning",
+      "generation"
+    ],
+    "intent": "ANDL",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ ဖြစ်နိုင်ပါတယ်။ ကိုင်းထိပ်ကစပြီး ကိုင်းဆုံ/ပင်စည်ဘက်ကို ခြောက်လာနိုင်ပါတယ်။",
+    "required_facts": [
+      "Likely disease: မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ.",
+      "Drying may progress from branch tips toward junctions/stem."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "ANDL",
+        "title": "မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+        "locator": "ANDL/1-Symptoms_and_Damage"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "ANDL",
+      "topic_title_my": "မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+      "crop_group": "Chili",
+      "category": "Integrated Pest Management",
+      "subtopic": "ANDL/1-Symptoms_and_Damage"
+    },
+    "curation": {
+      "source_type": "generated",
+      "selection": "census",
+      "quality_tier": "silver",
+      "ground_truth_status": "resumed"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chili",
+      "diagnosis",
+      "legacy-failure"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "synthetic"
+  },
+  {
+    "case_id": "smoke.answer.andl.noisy-treatment.002",
+    "name": "Handle noisy Burmese chili rot treatment query",
+    "language": "my",
+    "user_input": "င0ုပ္သီးေတြပုပ္ေနလိုဘာေဆးသုံရမလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "robustness",
+      "retrieval",
+      "safety",
+      "domain_reasoning"
+    ],
+    "intent": "ANDL",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ငရုတ်သီးပုပ်တာဟာ မှဲ့ပြောက်စွန်း/ကိုင်းဖျားခြောက်ရောဂါ ဖြစ်နိုင်ပါတယ်။ ရောဂါရှိအစိတ်အပိုင်းတွေ ဖယ်ရှားဖျက်ဆီးပြီး ဘာမထီစမ်းနဲ့ ဓာတုမှိုသတ်ဆေးကို တစ်ချိန်တည်း မရောသုံးပါနဲ့။",
+    "required_facts": [
+      "Possible disease: မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ.",
+      "Remove/destroy infected plant material.",
+      "Do not mix/apply Trichoderma and chemical fungicide at the same time."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "ANDL",
+        "title": "မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+        "locator": "ANDL/2-Prevention_and_Treatment_Methods"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "ANDL",
+      "topic_title_my": "မှဲ့ပြောက်စွန်း (ခေါ်) ကိုင်းဖျားခြောက်ရောဂါ ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+      "crop_group": "Chili",
+      "category": "Integrated Pest Management",
+      "subtopic": "ANDL/2-Prevention_and_Treatment_Methods"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chili",
+      "noisy-text",
+      "legacy-failure"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.bfsc.ratio.003",
+    "name": "Chickpea boron foliar mix ratio",
+    "language": "my",
+    "user_input": "ကုလားပဲအထွက်တိုးလက်ချားမြေဩဇာကဘာတွေနဲ့ရောစပ်ရတာလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "BFSC",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ရေ ၄ ဂါလံပုံးတစ်ပုံးမှာ ပုလဲ ၁၆ ဇွန်းနဲ့ ဘိုရွန် (လက်ချား) ၄ ဇွန်း ထည့်ဖျော်ပါ။",
+    "required_facts": [
+      "4-gallon tank.",
+      "16 tablespoons of ပုလဲ.",
+      "4 tablespoons of ဘိုရွန် (လက်ချား)."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "BFSC",
+        "title": "ကုလားပဲ အတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+        "locator": "BFSC/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "BFSC",
+      "topic_title_my": "ကုလားပဲ အတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+      "crop_group": "Chickpea",
+      "category": "Farm Extension",
+      "subtopic": "BFSC/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chickpea",
+      "dosage"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.bfsg.noisy-ratio.004",
+    "name": "Parse noisy gram boron ratio question",
+    "language": "my",
+    "user_input": "မတ်ပဲပင်ဖျန်းရင် လက်ချာဘယ်နှစွန်းယူယိးယာဘနှစွန်း ထည့့်ရမလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "robustness",
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "BFSG",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "မတ်ပဲ/ပဲတီစိမ်းအတွက် ရေ ၄ ဂါလံပုံးတစ်ပုံးမှာ ပုလဲ ၁၆ ဇွန်းနဲ့ လက်ချား ၄ ဇွန်း ထည့်ဖျော်ပါ။",
+    "required_facts": [
+      "4-gallon tank.",
+      "16 tablespoons of ပုလဲ.",
+      "4 tablespoons of လက်ချား."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "BFSG",
+        "title": "ပဲ တီစိမ်း/မတ်ပဲအတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+        "locator": "BFSG/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "BFSG",
+      "topic_title_my": "ပဲ တီစိမ်း/မတ်ပဲအတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+      "crop_group": "Grams",
+      "category": "Farm Extension",
+      "subtopic": "BFSG/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "grams",
+      "noisy-text",
+      "dosage"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.bfur.basalfertilizer.005",
+    "name": "Identify basal fertilizer components for paddy",
+    "language": "my",
+    "user_input": "စပါးကောင်းဖို့ဘာမြေခံမြေဩဇာသုံးရမလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "generation"
+    ],
+    "intent": "BFUR",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "စပါးမြေခံအတွက် ပုလဲ (နိုက်ထရိုဂျင်)၊ တီစူပါ (ဖော့စဖိတ်) နဲ့ ပိုတက်ရှ် (ပိုတက်စီယမ်) ကို KB က အကြံပြုထားပါတယ်။",
+    "required_facts": [
+      "Basal components: ပုလဲ (nitrogen), တီစူပါ (phosphate), ပိုတက်ရှ် (potassium)."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "BFUR",
+        "title": "စပါးမှာမြေခံ မြေဩဇာထည့်သွင်းခြင်း",
+        "locator": "BFUR/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "BFUR",
+      "topic_title_my": "စပါးမှာမြေခံ မြေဩဇာထည့်သွင်းခြင်း",
+      "crop_group": "Paddy",
+      "category": "Farm Extension",
+      "subtopic": "BFUR/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "paddy",
+      "fertilizer"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.clrp.rootrot.012",
+    "name": "Groundnut root-rot treatment",
+    "language": "my",
+    "user_input": "မြေပဲ ပင်ရင်းပုပ်နေလို့",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling",
+      "safety",
+      "domain_reasoning"
+    ],
+    "intent": "CLRP",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "မြေပဲပင်ရင်းပုပ်နေရာ ၁၀ ပေပတ်လည်အတွက် ကျောက်မှုန့် ၁ ပြည်နှုန်း သုံးနိုင်ပါတယ်။ ဘာမထီစမ်းကို KB အတိုင်းသုံးပြီး ဓာတုမှိုသတ်ဆေးနဲ့ တစ်ချိန်တည်း မရောပါနဲ့။",
+    "required_facts": [
+      "About 1 pyi gypsum per 10-foot affected area.",
+      "Trichoderma may be used per KB.",
+      "Do not mix Trichoderma with chemical fungicide at the same time."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "CLRP",
+        "title": "ပင်ရင်းပုပ် ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+        "locator": "CLRP/2-Prevention_and_Treatment_Methods"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "CLRP",
+      "topic_title_my": "ပင်ရင်းပုပ် ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+      "crop_group": "Groundnut",
+      "category": "Integrated Pest Management",
+      "subtopic": "CLRP/2-Prevention_and_Treatment_Methods"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "groundnut",
+      "disease",
+      "treatment"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.efsh-chili.epsom.006",
+    "name": "Recommend chili Epsom foliar application",
+    "language": "my",
+    "user_input": "ငရုပ်အသီးအပွင် နည်း နေတယ်ဘာဖြန်ရမလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling",
+      "domain_reasoning"
+    ],
+    "intent": "EFSH_CHILI",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ငရုတ်အတွက် ဆားခါး ၂ ဇွန်းကို ရေ ၄ ဂါလံပုံးမှာ ဖျော်ပါ။ ပန်းဖူးစဝင်ချိန် တစ်ကြိမ်နဲ့ ပန်းလှိုင်လှိုင်ပွင့်ချိန် တစ်ကြိမ် ဖျန်းပါ။",
+    "required_facts": [
+      "2 tablespoons magnesium sulfate per 4-gallon tank.",
+      "Apply at flower-bud initiation and heavy flowering.",
+      "It is magnesium sulfate, not table salt."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "EFSH_CHILI",
+        "title": "ငရု တ်အတွက် ဆားခါးရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+        "locator": "EFSH_CHILI/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "EFSH_CHILI",
+      "topic_title_my": "ငရု တ်အတွက် ဆားခါးရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+      "crop_group": "Chili",
+      "category": "Farm Extension",
+      "subtopic": "EFSH_CHILI/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chili",
+      "dosage",
+      "timing"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.efso.onion-epsom.007",
+    "name": "Onion Epsom foliar dosage and timing",
+    "language": "my",
+    "user_input": "ကြက်သွန်ဆားခါးထည့်နည်း",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling",
+      "domain_reasoning"
+    ],
+    "intent": "EFSO",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ကြက်သွန်နီအတွက် ဆားခါး ၂ ဇွန်းကို ရေ ၄ ဂါလံပုံးမှာ ဖျော်ပြီး မူမှန်ရွက် ၃-၅ ရွက်နဲ့ ၇-၈ ရွက်အဆင့်တွေမှာ ဖျန်းပါ။ ပူပြင်းခြောက်သွေ့ချိန် မဖျန်းပါနဲ့။",
+    "required_facts": [
+      "2 tablespoons per 4-gallon tank.",
+      "Apply at 3-5 true leaves and 7-8 true leaves.",
+      "Avoid spraying in high heat/dry conditions."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "EFSO",
+        "title": "ကြက်သွန်နီအတွက် ဆားခါးရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+        "locator": "EFSO/2-How_to"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "EFSO",
+      "topic_title_my": "ကြက်သွန်နီအတွက် ဆားခါးရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+      "crop_group": "Onion",
+      "category": "Farm Extension",
+      "subtopic": "EFSO/2-How_to"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "onion",
+      "dosage",
+      "timing"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.gasr.snail.008",
+    "name": "Recognize golden apple snail as a paddy pest",
+    "language": "my",
+    "user_input": "စပါးခင်းဖျက်တာလား ခရုဟ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "domain_reasoning"
+    ],
+    "intent": "GASR",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ရွှေခရုဟာ စပါးပင်ငယ်တွေကို အဓိက ကိုက်ဖျက်စားတဲ့ စပါးခင်းဖျက်ပိုးတစ်မျိုးပါ။",
+    "required_facts": [
+      "Golden apple snail is a major paddy pest.",
+      "It particularly damages young rice plants."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "GASR",
+        "title": "ရွှေခရု ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+        "locator": "GASR/1-Symptoms_Damage"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "GASR",
+      "topic_title_my": "ရွှေခရု ကာကွယ်နှိမ်နင်းနည်းလမ်း",
+      "crop_group": "Paddy",
+      "category": "Integrated Pest Management",
+      "subtopic": "GASR/1-Symptoms_Damage"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "paddy",
+      "pest"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.gyac.timing.010",
+    "name": "Chickpea gypsum timing",
+    "language": "my",
+    "user_input": "ကုလားပဲကျောက်မှုန့်ကရော ဘယ်အချိန်သုံးရတာလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "GYAC",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ကုလားပဲကျောက်မှုန့်ကို မြေခံချိန်မှာ ထည့်ပါ။ မမီရင် စိုက်ပြီး ၁ လသားအတွင်း ထည့်နိုင်ပြီး မြေဆီလွှာအစိုဓာတ်ရှိဖို့ လိုပါတယ်။",
+    "required_facts": [
+      "Apply at basal/land-preparation time.",
+      "If missed, apply within 1 month after planting.",
+      "Soil should have moisture."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "GYAC",
+        "title": "ကုလားပဲ အတွက်ကျောက်မှုန့်မြေဩဇာ အသုံးပြုခြင်း",
+        "locator": "GYAC/2-How_to"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "GYAC",
+      "topic_title_my": "ကုလားပဲ အတွက်ကျောက်မှုန့်မြေဩဇာ အသုံးပြုခြင်း",
+      "crop_group": "Chickpea",
+      "category": "Farm Extension",
+      "subtopic": "GYAC/2-How_to"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chickpea",
+      "timing"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.gyap.numeric-noise.009",
+    "name": "Handle malformed age digit in groundnut gypsum query",
+    "language": "my",
+    "user_input": "မြေပဲ0ပတ်သား ပင်ပြန်ဘာကျွေးရမလဲသိပါရစေရှင့်",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "robustness",
+      "numeric_handling",
+      "retrieval"
+    ],
+    "intent": "GYAP",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "မြေပဲအတွက် တစ်ဧကကို ၂၅ ကီလိုအိတ် ၄ အိတ်နှုန်း ကျောက်မှုန့်သုံးပါ။",
+    "required_facts": [
+      "Groundnut gypsum rate: four 25-kg bags per acre."
+    ],
+    "forbidden_claims": [
+      "Do not silently reinterpret '0 weeks' into a specific age."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "GYAP",
+        "title": "မြေပဲ အတွက်ကျောက်မှုန့်မြေဩဇာ အသုံးပြုခြင်း",
+        "locator": "GYAP/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Do not invent a plant age from the malformed age token; preserve the KB rate exactly."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "GYAP",
+      "topic_title_my": "မြေပဲ အတွက်ကျောက်မှုန့်မြေဩဇာ အသုံးပြုခြင်း",
+      "crop_group": "Groundnut",
+      "category": "Farm Extension",
+      "subtopic": "GYAP/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "groundnut",
+      "noisy-text",
+      "dosage"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.mighty.trichoderma.013",
+    "name": "Trichoderma multiplication mixture",
+    "language": "my",
+    "user_input": "ထရိုင်ငိုဒါးမားပွားစာလုပ်နည်းလေး သိချင်ပါတ\n်",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "PROD_MIGHTY",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ဘာမထီစမ်း ထရိုင်ဂိုဒါးမားအရည် ၁ လီတာကို နွားချေး/မြေဆွေး ၂ တင်းနဲ့ ဖွဲနု ၅ ပြည်နဲ့ ပွားပါ။ ပျိုးခင်းစပ်မြေနဲ့ ၁:၄ ခန့် ရောနိုင်ပါတယ်။",
+    "required_facts": [
+      "1 liter Trichoderma liquid.",
+      "2 baskets cow manure or compost.",
+      "5 pyi rice bran.",
+      "Nursery mix about 1:4."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "PROD_MIGHTY",
+        "title": "Sun-Kissed",
+        "locator": "PROD_MIGHTY/1-How_to_Mighty"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "PROD_MIGHTY",
+      "topic_title_my": "Sun-Kissed",
+      "crop_group": "Product",
+      "category": "Ag Biologicals | Crop Protection",
+      "subtopic": "PROD_MIGHTY/1-How_to_Mighty"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "real-census",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "product",
+      "trichoderma",
+      "dosage"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.answer.multiturn.chickpea-boron.015",
+    "name": "Carry chickpea context into follow-up dosage question",
+    "language": "my",
+    "user_input": "ရေ ၄ ဂါလံဆို လက်ချားဘယ်နှစ်ဇွန်းလဲ",
+    "conversation_context": [
+      {
+        "role": "user",
+        "content": "ကုလားပဲရွက်ဖျန်းအတွက် မေးမလို့ပါ"
+      },
+      {
+        "role": "assistant",
+        "content": "ကုလားပဲရွက်ဖျန်းအတွက် ဘာအချက်ကို သိချင်ပါသလဲ။"
+      }
+    ],
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "multi_turn",
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "BFSC",
+    "expected_behavior": [
+      "Retain the chickpea context and answer without asking for the crop again."
+    ],
+    "reference_answer": "ရေ ၄ ဂါလံပုံးတစ်ပုံးမှာ လက်ချား ၄ ဇွန်း ထည့်ပါ။",
+    "required_facts": [
+      "Chickpea context.",
+      "4 tablespoons boron per 4-gallon tank."
+    ],
+    "forbidden_claims": [
+      "Do not switch crop or dosage."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "BFSC",
+        "title": "ကုလားပဲ အတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+        "locator": "BFSC/1-Ingredients"
+      }
+    ],
+    "evaluation_rules": [
+      "Fail if context is lost or dosage changes."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "BFSC",
+      "topic_title_my": "ကုလားပဲ အတွက် ဘိုရွန် (လက်ချား) ရွ က်ဖြန်းမြေဩဇာ အသုံးပြုနည်း",
+      "crop_group": "Chickpea",
+      "category": "Farm Extension",
+      "subtopic": "BFSC/1-Ingredients"
+    },
+    "curation": {
+      "source_type": "generated",
+      "selection": "representative",
+      "quality_tier": "silver",
+      "notes": "Derived from BFSC facts."
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "multi-turn",
+      "chickpea",
+      "dosage"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "synthetic"
+  },
+  {
+    "case_id": "smoke.answer.multiturn.neem.016",
+    "name": "Carry pest-present context into neem interval follow-up",
+    "language": "my",
+    "user_input": "ဖျက်ပိုးကျနေပြီဆို ဘယ်နှစ်ရက်ခြားပက်ရမလဲ",
+    "conversation_context": [
+      {
+        "role": "user",
+        "content": "ငရုတ်မှာ တမာပိုးသတ်ဆေး သုံးနေတာပါ"
+      },
+      {
+        "role": "assistant",
+        "content": "ကြိုတင်ကာကွယ်ဖို့လား၊ ဖျက်ပိုးကျနေပြီးသားအခြေအနေလား ပြောပေးပါ။"
+      }
+    ],
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "multi_turn",
+      "retrieval",
+      "numeric_handling"
+    ],
+    "intent": "PROD_YETAGONNEEM",
+    "expected_behavior": [
+      "Retain chili + neem context and answer the active-infestation interval."
+    ],
+    "reference_answer": "ဖျက်ပိုးကျနေပြီဆို ၃ ရက်ခြား ၂ ကြိမ် ပက်ဖျန်းနိုင်ပါတယ်။",
+    "required_facts": [
+      "Every 3 days for 2 applications when pests are present."
+    ],
+    "forbidden_claims": [
+      "Do not return the weekly preventive interval."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "PROD_YETAGONNEEM",
+        "title": "Yetagon Neem",
+        "locator": "PROD_YETAGONNEEM/1-How_to"
+      }
+    ],
+    "evaluation_rules": [
+      "Fail if it gives the preventive weekly interval."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "PROD_YETAGONNEEM",
+      "topic_title_my": "Yetagon Neem",
+      "crop_group": "Product",
+      "category": "Ag Biologicals | Crop Protection",
+      "subtopic": "PROD_YETAGONNEEM/1-How_to"
+    },
+    "curation": {
+      "source_type": "generated",
+      "selection": "representative",
+      "quality_tier": "silver",
+      "notes": "Derived from Yetagon Neem facts."
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "multi-turn",
+      "chili",
+      "neem"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "synthetic"
+  },
+  {
+    "case_id": "smoke.answer.neem.interval.014",
+    "name": "Neem spray interval for chili",
+    "language": "my",
+    "user_input": "ငရုတ်မှာ တမာသုံးရင် ဘယ်နှစ်ရက်ခြားပက်ရမှာလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling",
+      "domain_reasoning"
+    ],
+    "intent": "PROD_YETAGONNEEM",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "ငရုတ်မှာ ကြိုတင်ကာကွယ်ဖို့ တမာကို တစ်ပတ်ခြားဖျန်းနိုင်ပါတယ်။ ဖျက်ပိုးကျနေပြီဆို ၃ ရက်ခြား ၂ ကြိမ် ဖျန်းနိုင်ပါတယ်။",
+    "required_facts": [
+      "Prevention: weekly.",
+      "Active infestation: every 3 days for 2 applications."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "PROD_YETAGONNEEM",
+        "title": "Yetagon Neem",
+        "locator": "PROD_YETAGONNEEM/1-How_to"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "PROD_YETAGONNEEM",
+      "topic_title_my": "Yetagon Neem",
+      "crop_group": "Product",
+      "category": "Ag Biologicals | Crop Protection",
+      "subtopic": "PROD_YETAGONNEEM/1-How_to"
+    },
+    "curation": {
+      "source_type": "generated",
+      "selection": "spanning",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "chili",
+      "neem",
+      "timing"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "synthetic"
+  },
+  {
+    "case_id": "smoke.answer.swsr.seed-salt.011",
+    "name": "Paddy salt-water seed selection timing",
+    "language": "my",
+    "user_input": "စပါးကိုဆားရည္စိမ္တာေလဘယ္နွစ္မိနစ္စိမ္ပီးေဆးရတာလဲ",
+    "behavior_label": "answerable",
+    "expected_action": "answer",
+    "evaluation_focus": [
+      "retrieval",
+      "numeric_handling",
+      "safety"
+    ],
+    "intent": "SWSR",
+    "expected_behavior": [
+      "Answer from the approved KB and preserve critical crop/topic/numeric facts."
+    ],
+    "reference_answer": "မျိုးစပါးကို ဆားရည်ထဲ ၄-၅ မိနစ် မွှေပြီး ၂ မိနစ်ခန့် အနည်ထိုင်စောင့်ပါ။ ရွေးပြီးသားမျိုးစေ့ကို ရေနဲ့ပြန်ဆေးပြီး ဆားရည်ထဲ အကြာကြီး မစိမ်ပါနဲ့။",
+    "required_facts": [
+      "Stir 4-5 minutes.",
+      "Wait about 2 minutes for settling.",
+      "Rinse selected seeds with clean water.",
+      "Do not soak for a long time."
+    ],
+    "forbidden_claims": [
+      "Do not substitute a different crop, disease, product, dosage, or timing."
+    ],
+    "gold_sources": [
+      {
+        "source_id": "SWSR",
+        "title": "ဆားရည်နဲ့မျိုးရွေးနည်း",
+        "locator": "SWSR/2-How_to"
+      }
+    ],
+    "evaluation_rules": [
+      "Critical fact errors fail even when the answer is semantically similar."
+    ],
+    "domain": {
+      "level": "subtopic",
+      "topic_code": "SWSR",
+      "topic_title_my": "ဆားရည်နဲ့မျိုးရွေးနည်း",
+      "crop_group": "Paddy",
+      "category": "Crop Protection",
+      "subtopic": "SWSR/2-How_to"
+    },
+    "curation": {
+      "source_type": "real",
+      "selection": "spanning",
+      "quality_tier": "silver",
+      "ground_truth_status": "answered"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "paddy",
+      "seed",
+      "timing"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "silver"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.clarify.gypsum.018",
+    "name": "Clarify vague gypsum-use question",
+    "language": "my",
+    "user_input": "ဂျစ်ပဆမ်ထည့်လို့ရလား",
+    "behavior_label": "underspecified",
+    "expected_action": "clarify",
+    "evaluation_focus": [
+      "ambiguity",
+      "near_miss"
+    ],
+    "intent": "GYAH_CHILI",
+    "expected_behavior": [
+      "Ask which crop and intended use/timing before recommending gypsum."
+    ],
+    "forbidden_claims": [
+      "Do not give a chili-specific dosage without crop context."
+    ],
+    "evaluation_rules": [
+      "Do not assume the chili gypsum article."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "behavior-only",
+      "near_topic": "GYAH_CHILI",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "underspecified",
+      "gypsum"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.clarify.numeric-corruption.020",
+    "name": "Clarify corrupted paddy age input",
+    "language": "my",
+    "user_input": "စပါး သက်တမ်း 000ရက်က ဘယ်နှခါ မြေသြဇာ​ကျွေးရမှာလဲ",
+    "behavior_label": "underspecified",
+    "expected_action": "clarify",
+    "evaluation_focus": [
+      "ambiguity",
+      "numeric_handling",
+      "robustness"
+    ],
+    "intent": "MFUR",
+    "expected_behavior": [
+      "Ask the user to confirm the actual rice age and intended fertilizer/application."
+    ],
+    "forbidden_claims": [
+      "Do not invent or normalize the age without confirmation."
+    ],
+    "evaluation_rules": [
+      "Do not silently interpret '000 days' as a real age."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "representative",
+      "quality_tier": "behavior-only",
+      "near_topic": "MFUR",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "underspecified",
+      "paddy",
+      "noisy-text"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.clarify.onion-spray.019",
+    "name": "Clarify unspecified onion spray",
+    "language": "my",
+    "user_input": "ကြ က်သွန်နီရော ဖြန်းလို့ရလားရှင့်",
+    "behavior_label": "underspecified",
+    "expected_action": "clarify",
+    "evaluation_focus": [
+      "ambiguity",
+      "multi_turn"
+    ],
+    "intent": "EFSO",
+    "expected_behavior": [
+      "Ask what product or mixture the user means by 'spray'."
+    ],
+    "forbidden_claims": [],
+    "evaluation_rules": [
+      "Crop alone is insufficient because the spray/product is unspecified."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "spanning",
+      "quality_tier": "behavior-only",
+      "near_topic": "EFSO",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "underspecified",
+      "onion"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.clarify.pearl.017",
+    "name": "Clarify bare pearl keyword",
+    "language": "my",
+    "user_input": "ပုလဲ",
+    "behavior_label": "underspecified",
+    "expected_action": "clarify",
+    "evaluation_focus": [
+      "ambiguity",
+      "routing"
+    ],
+    "intent": "MFUR",
+    "expected_behavior": [
+      "Ask what crop and what information about ပုလဲ is needed; do not assume dosage/timing."
+    ],
+    "forbidden_claims": [
+      "Do not provide a crop-specific schedule without context."
+    ],
+    "evaluation_rules": [
+      "Pass requires clarification rather than selecting a crop-specific article from the keyword alone."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "spanning",
+      "quality_tier": "behavior-only",
+      "near_topic": "MFUR",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "underspecified",
+      "keyword-conflict"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.escalate.branch-phone.029",
+    "name": "Escalate branch phone-number request",
+    "language": "my",
+    "user_input": "ဓနုဖြူရုံးခွဲးဖုန်းလေးသိချင်လို့ပါရှင့်",
+    "behavior_label": "escalate",
+    "expected_action": "escalate",
+    "evaluation_focus": [
+      "routing",
+      "tool_use"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "Route to the approved contact/store-locator or human-support process."
+    ],
+    "forbidden_claims": [
+      "Do not fabricate a phone number."
+    ],
+    "evaluation_rules": [
+      "Do not invent a phone number."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "escalate",
+      "contact"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.escalate.trichoderma-purchase.030",
+    "name": "Escalate Yangon Trichoderma purchase request",
+    "language": "my",
+    "user_input": "ရန်ကုန်မှာထရိုင်းကိုးဒါးမား ဘယ်မှာဝယ်လို့ရမလဲ၊ကျေးဇူးပြု၍ပြောပေးပါ",
+    "behavior_label": "escalate",
+    "expected_action": "escalate",
+    "evaluation_focus": [
+      "routing",
+      "tool_use"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "Route to the approved sales/store-locator or human-support process for current Yangon availability."
+    ],
+    "forbidden_claims": [
+      "Do not fabricate current availability or location."
+    ],
+    "evaluation_rules": [
+      "Do not invent a shop, address, stock status, or price."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "escalate",
+      "sales",
+      "trichoderma"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.nearmiss.gypsum-chemistry.024",
+    "name": "Near-miss gypsum chemistry question",
+    "language": "my",
+    "user_input": "ကျောက်မှုန့်ရဲ့ ဓာတုဒြပ်ပေါင်းကိုသိလို့ရမလား",
+    "behavior_label": "near_miss",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "near_miss",
+      "retrieval",
+      "routing"
+    ],
+    "intent": "GYAH_CHILI",
+    "expected_behavior": [
+      "Recognize the gypsum keyword but abstain because chemical composition is not covered by the approved KB."
+    ],
+    "forbidden_claims": [
+      "Do not answer from general chemistry knowledge."
+    ],
+    "evaluation_rules": [
+      "Tests lexical similarity versus supported content."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "behavior-only",
+      "near_topic": "GYAH_CHILI",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "near-miss",
+      "gypsum"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.nearmiss.gypsum-crop-comparison.025",
+    "name": "Near-miss cross-crop gypsum comparison",
+    "language": "my",
+    "user_input": "ဘယ်လိုသီးနှံမျိုးက ကျောက်မှုန့်နဲ့ အသင့်တော်ဆုံးလဲဗျ",
+    "behavior_label": "near_miss",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "near_miss",
+      "routing"
+    ],
+    "intent": "GYAH_CHILI",
+    "expected_behavior": [
+      "State that the KB does not support ranking which crop is most suitable for gypsum."
+    ],
+    "forbidden_claims": [
+      "Do not claim a 'best' crop without explicit support."
+    ],
+    "evaluation_rules": [
+      "Do not infer a cross-crop ranking from crop-specific articles."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "behavior-only",
+      "near_topic": "GYAH_CHILI",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "near-miss",
+      "gypsum",
+      "comparison"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.nearmiss.gypsum-flowering.026",
+    "name": "Near-miss gypsum use on flowering plants",
+    "language": "my",
+    "user_input": "ကေိာက်မှုန့်ပန်ပွင့်တဲ့အပင်ထည့်ရလား",
+    "behavior_label": "near_miss",
+    "expected_action": "abstain",
+    "evaluation_focus": [
+      "near_miss",
+      "routing"
+    ],
+    "intent": "GYAH_CHILI",
+    "expected_behavior": [
+      "State that crop-specific gypsum guidance does not establish use for unspecified flowering plants."
+    ],
+    "forbidden_claims": [],
+    "evaluation_rules": [
+      "Do not generalize crop-specific instructions."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "census",
+      "quality_tier": "behavior-only",
+      "near_topic": "GYAH_CHILI",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "near-miss",
+      "gypsum"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.social.frustration.028",
+    "name": "Handle user frustration without irrelevant retrieval",
+    "language": "my",
+    "user_input": "မပြင်ဘာဘူးခင်ဗျ \nဒါတွေပဲထပ်ခါထပ်ခါမေးနေတယ်စိတ်တော့မရှည်တော့ဘူနော်ဟင်",
+    "behavior_label": "social",
+    "expected_action": "no_retrieval",
+    "evaluation_focus": [
+      "routing"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "Acknowledge the complaint briefly and invite the user to state what they need next."
+    ],
+    "forbidden_claims": [],
+    "evaluation_rules": [
+      "Do not dump unrelated KB content."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "spanning",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "social",
+      "frustration"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  },
+  {
+    "case_id": "smoke.social.thanks.027",
+    "name": "Handle a thank-you without retrieval",
+    "language": "my",
+    "user_input": "thank you ပါနော်",
+    "behavior_label": "social",
+    "expected_action": "no_retrieval",
+    "evaluation_focus": [
+      "routing"
+    ],
+    "intent": null,
+    "expected_behavior": [
+      "Reply briefly and politely without retrieving agriculture content."
+    ],
+    "forbidden_claims": [],
+    "evaluation_rules": [
+      "Pass requires no unnecessary KB answer."
+    ],
+    "curation": {
+      "source_type": "real",
+      "selection": "spanning",
+      "quality_tier": "behavior-only",
+      "ground_truth_status": "expected-behaviour"
+    },
+    "tags": [
+      "smoke",
+      "agriculture",
+      "social"
+    ],
+    "datasets": [
+      "smoke-v1",
+      "behavior-only"
+    ],
+    "provenance": "production"
+  }
+]

@@ -1,6 +1,7 @@
 import json
 
-from pd_llm_eval.yellow import extract_response_text, load_dataset, run_yellow_batch
+from pd_llm_eval.io import load_dataset
+from pd_llm_eval.yellow import extract_response_text, run_yellow_batch
 
 
 def _case(case_id: str) -> dict:
