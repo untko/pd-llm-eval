@@ -32,7 +32,7 @@ def load_json(path: str | Path) -> list[EvalCase]:
     path = Path(path)
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, list):
-        raise ValueError(f"{path}: expected a JSON array")
+        raise TypeError(f"{path}: expected a JSON array")
     return _validate_objects(payload, path)
 
 
