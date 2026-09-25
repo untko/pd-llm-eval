@@ -20,7 +20,7 @@ def _extract_json_object(text: str) -> dict[str, typing.Any]:
 
     payload = json.loads(stripped[start : end + 1])
     if not isinstance(payload, dict):
-        raise ValueError("Judge output is not a JSON object")
+        raise TypeError("Judge output is not a JSON object")
     return payload
 
 
