@@ -1,0 +1,46 @@
+version: 1
+
+scoring:
+  scale: 10
+  dimensions:
+    correctness:
+      weight: 2
+      description: Factual and task-level correctness.
+    groundedness:
+      weight: 2
+      description: Claims are supported by the allowed knowledge or tool outputs.
+    completeness:
+      weight: 2
+      description: Covers the material parts required by the case.
+    instruction_adherence:
+      weight: 2
+      description: Follows system, workflow, and case-specific requirements.
+    clarity:
+      weight: 1
+      description: Clear, concise, understandable response.
+    tool_retrieval_correctness:
+      weight: 1
+      description: Correct retrieval/tool choice and arguments when applicable.
+      applicability: conditional
+
+normalization:
+  rule: Remove non-applicable dimensions from the denominator, then normalize to 10.
+
+hard_fail:
+  - critical_hallucination
+  - unsafe_advice
+  - materially_wrong_tool_or_action
+  - contradicts_authoritative_source
+  - fails_required_abstention
+  - privacy_or_security_violation
+
+reporting:
+  - mean_score
+  - pass_rate
+  - hard_fail_rate
+  - score_by_case_type
+  - score_by_language
+  - repeated_run_variance
+  - latency_p50
+  - latency_p95
+  - cost_per_case
