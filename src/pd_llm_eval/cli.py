@@ -6,6 +6,7 @@ import json
 from .io import load_dataset
 from .opencode_judge import judge_opencode_results
 from .opencode_runner import run_opencode_batch
+from .report import render_markdown_report
 from .yellow import run_yellow_batch
 
 
@@ -40,6 +41,10 @@ def main() -> None:
     judge_local.add_argument("--out", default="results/opencode-judged.jsonl")
     judge_local.add_argument("--timeout", type=float, default=180.0)
     judge_local.add_argument("--limit", type=int)
+
+    report = subparsers.add_parser("report", help="Render JSONL results as readable Markdown")
+    report.add_argument("results")
+    report.add_argument("--out", default="results/report.md")
 
     run_yellow = subparsers.add_parser(
         "run-yellow",
@@ -87,6 +92,11 @@ def main() -> None:
             timeout=args.timeout,
             limit=args.limit,
         )
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return
+
+    if args.command == "report":
+        summary = render_markdown_report(args.results, args.out)
         print(json.dumps(summary, ensure_ascii=False, indent=2))
         return
 
