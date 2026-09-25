@@ -21,9 +21,8 @@ jobs:
       - name: Validate example dataset
         run: pd-eval validate examples/example_cases.jsonl
       - name: Validate smoke suite
-        run: |
-          for file in datasets/smoke_v1/*.jsonl; do
-            pd-eval validate "$file"
-          done
-      - name: Dry-run smoke batch
+        run: pd-eval validate datasets/smoke_v1/cases.json
+      - name: Dry-run OpenCode smoke batch
+        run: pd-eval run-opencode datasets/smoke_v1/cases.json --model dummy/model --dry-run
+      - name: Dry-run Yellow smoke batch
         run: pd-eval run-yellow datasets/smoke_v1 --dry-run
