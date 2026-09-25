@@ -1,10 +1,9 @@
-from typing import Any, Literal, Self
+import typing
 
-from pydantic import BaseModel, ConfigDict, Field
-from pydantic.functional_validators import model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
-BehaviorLabel = Literal[
+BehaviorLabel = typing.Literal[
     "answerable",
     "underspecified",
     "out_of_kb",
@@ -13,7 +12,7 @@ BehaviorLabel = Literal[
     "escalate",
 ]
 
-ExpectedAction = Literal[
+ExpectedAction = typing.Literal[
     "answer",
     "clarify",
     "abstain",
@@ -21,7 +20,7 @@ ExpectedAction = Literal[
     "escalate",
 ]
 
-EvalFocus = Literal[
+EvalFocus = typing.Literal[
     "retrieval",
     "generation",
     "multi_turn",
@@ -36,8 +35,8 @@ EvalFocus = Literal[
     "near_miss",
 ]
 
-Role = Literal["system", "user", "assistant", "tool"]
-Provenance = Literal["expert", "production", "synthetic", "regression"]
+Role = typing.Literal["system", "user", "assistant", "tool"]
+Provenance = typing.Literal["expert", "production", "synthetic", "regression"]
 
 
 class Message(BaseModel):
@@ -61,7 +60,7 @@ class ToolCallExpectation(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     tool_name: str
-    arguments: dict[str, Any] | None = None
+    arguments: dict[str, typing.Any] | None = None
     turn_index: int | None = Field(default=None, ge=0)
 
 
@@ -70,7 +69,7 @@ class DomainMetadata(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    level: Literal["topic", "subtopic"] | None = None
+    level: typing.Literal["topic", "subtopic"] | None = None
     topic_code: str | None = None
     topic_title_my: str | None = None
     crop_group: str | None = None
@@ -83,8 +82,8 @@ class CurationMetadata(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    source_type: Literal["real", "generated"] | None = None
-    selection: Literal["census", "real-census", "representative", "spanning"] | None = None
+    source_type: typing.Literal["real", "generated"] | None = None
+    selection: typing.Literal["census", "real-census", "representative", "spanning"] | None = None
     kb_overlap: float | None = None
     kb_longest_span: float | None = None
     origin_uuid: str | None = None
@@ -109,7 +108,7 @@ class EvalCase(BaseModel):
     # The final user message under evaluation. Prior turns live in conversation_context.
     user_input: str
     conversation_context: list[Message] = Field(default_factory=list)
-    initial_state: dict[str, Any] = Field(default_factory=dict)
+    initial_state: dict[str, typing.Any] = Field(default_factory=dict)
 
     # What the user request represents and what the system should do.
     behavior_label: BehaviorLabel
@@ -134,10 +133,10 @@ class EvalCase(BaseModel):
     tags: list[str] = Field(default_factory=list)
     datasets: list[str] = Field(default_factory=list)
     provenance: Provenance = "expert"
-    metadata: dict[str, Any] = Field(default_factory=dict)
+    metadata: dict[str, typing.Any] = Field(default_factory=dict)
 
     @model_validator(mode="after")
-    def validate_behavior_action(self) -> Self:
+    def validate_behavior_action(self) -> typing.Self:
         expected_by_label: dict[str, str] = {
             "answerable": "answer",
             "underspecified": "clarify",
