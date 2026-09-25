@@ -9,3 +9,7 @@ build/
 *.egg-info/
 .env
 results/
+
+# Raw/customer-derived evaluation data must not be committed to this public repo.
+data/private/
+data/raw/
