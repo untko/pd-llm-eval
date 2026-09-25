@@ -10,8 +10,11 @@ def minimal_case(case_id: str) -> dict:
     return {
         "case_id": case_id,
         "name": "Example",
-        "case_type": "factual_qa",
+        "language": "en",
         "user_input": "Question",
+        "behavior_label": "answerable",
+        "expected_action": "answer",
+        "evaluation_focus": ["generation"],
         "expected_behavior": ["Answer correctly"],
     }
 
@@ -40,4 +43,13 @@ def test_expected_behavior_is_required():
     data["expected_behavior"] = []
 
     with pytest.raises(ValueError):
+        EvalCase.model_validate(data)
+
+
+def test_behavior_and_expected_action_must_agree():
+    data = minimal_case("qa.003")
+    data["behavior_label"] = "underspecified"
+    data["expected_action"] = "answer"
+
+    with pytest.raises(ValueError, match="requires expected_action"):
         EvalCase.model_validate(data)
