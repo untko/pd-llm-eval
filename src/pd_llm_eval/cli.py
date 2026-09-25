@@ -50,3 +50,7 @@ def main() -> None:
             dry_run=args.dry_run,
         )
         print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()
