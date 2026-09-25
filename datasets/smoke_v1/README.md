@@ -29,7 +29,12 @@ The answerable set includes:
 
 No case is labeled `gold` yet. Promote cases to gold only after explicit expert/human verification.
 
-## Files
+## Editable source of truth
+
+- `cases.json`: all 30 cases in pretty-printed, human-editable JSON. Edit this file for normal benchmark maintenance.
+- The split JSONL files below are compatibility snapshots and should not be treated as the editable source.
+
+## Compatibility files
 
 - `answerable_a.jsonl`: cases 001-008
 - `answerable_b.jsonl`: cases 009-016
