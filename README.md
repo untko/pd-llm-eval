@@ -20,6 +20,7 @@ config/
 docs/
   evaluation-design.md        methodology and dataset construction
   yellow-ai.md                Yellow.ai compatibility boundary
+  running-yellow.md           batch execution against Yellow.ai
 examples/
   example_cases.jsonl         schema examples, not production benchmark cases
 datasets/
@@ -85,3 +86,19 @@ uv run pd-eval validate examples/example_cases.jsonl
 5. Expand toward 100-200 representative cases from real conversations.
 
 The smoke suite currently contains 16 answerable, 4 clarification, 3 out-of-KB, 3 near-miss, 2 social, and 2 escalation cases. See `datasets/smoke_v1/README.md`.
+
+## Run the Yellow.ai baseline
+
+Dry-run the 30-case suite:
+
+```bash
+pd-eval run-yellow datasets/smoke_v1 --dry-run
+```
+
+Then configure `YELLOW_API_URL`, `YELLOW_BOT_ID`, and (when required) `YELLOW_API_TOKEN`, and run:
+
+```bash
+bash scripts/run_yellow_smoke.sh
+```
+
+See `docs/running-yellow.md` for one-case testing, response-path configuration, concurrency, and repeated runs.
