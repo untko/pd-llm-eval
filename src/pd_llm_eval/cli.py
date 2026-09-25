@@ -4,6 +4,7 @@ import argparse
 import json
 
 from .io import load_dataset
+from .kb import KnowledgeBase, validate_case_sources
 from .opencode_judge import judge_opencode_results
 from .opencode_runner import run_opencode_batch
 from .report import render_markdown_report
@@ -30,6 +31,10 @@ def main() -> None:
     run_local.add_argument("--concurrency", type=int, default=1)
     run_local.add_argument("--limit", type=int)
     run_local.add_argument("--dry-run", action="store_true")
+    run_local.add_argument(
+        "--kb",
+        help="Path to kb_structure.json. Defaults to PD_KB_PATH when set.",
+    )
 
     judge_local = subparsers.add_parser(
         "judge-opencode",
@@ -41,6 +46,13 @@ def main() -> None:
     judge_local.add_argument("--out", default="results/opencode-judged.jsonl")
     judge_local.add_argument("--timeout", type=float, default=180.0)
     judge_local.add_argument("--limit", type=int)
+
+    validate_sources = subparsers.add_parser(
+        "validate-sources",
+        help="Validate every gold_source against an actual kb_structure.json",
+    )
+    validate_sources.add_argument("dataset")
+    validate_sources.add_argument("--kb", required=True)
 
     report = subparsers.add_parser("report", help="Render JSONL results as readable Markdown")
     report.add_argument("results")
@@ -79,8 +91,23 @@ def main() -> None:
             concurrency=args.concurrency,
             limit=args.limit,
             dry_run=args.dry_run,
+            kb_path=args.kb,
         )
         print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return
+
+    if args.command == "validate-sources":
+        cases = load_dataset(args.dataset)
+        missing = validate_case_sources(cases, KnowledgeBase(args.kb))
+        summary = {
+            "cases": len(cases),
+            "source_refs": sum(len(case.gold_sources) for case in cases),
+            "missing": missing,
+            "valid": not missing,
+        }
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        if missing:
+            raise SystemExit(1)
         return
 
     if args.command == "judge-opencode":

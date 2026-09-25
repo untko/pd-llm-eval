@@ -8,17 +8,20 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from .io import load_dataset
+from .kb import KnowledgeBase
 from .models import EvalCase
 
 
-def build_prompt(case: EvalCase, mode: str) -> str:
+def build_prompt(case: EvalCase, mode: str, kb: KnowledgeBase | None = None) -> str:
     history = "\n".join(
         f"{message.role.upper()}: {message.content}" for message in case.conversation_context
     ) or "(none)"
 
     context = "(none)"
     if mode == "oracle" and case.behavior_label == "answerable":
-        if case.required_facts:
+        if kb is not None and case.gold_sources:
+            context = kb.context_for_case(case) or "(none)"
+        elif case.required_facts:
             context = "\n".join(f"- {fact}" for fact in case.required_facts)
         elif case.reference_answer:
             context = case.reference_answer
@@ -69,10 +72,11 @@ def _run_case(
     timeout: float,
     run_id: str,
     iteration: int,
+    kb: KnowledgeBase | None,
 ) -> dict[str, typing.Any]:
     try:
         answer, latency_ms = run_opencode(
-            build_prompt(case, mode),
+            build_prompt(case, mode, kb),
             model=model,
             agent="pd-eval-respondent",
             timeout=timeout,
@@ -116,6 +120,7 @@ def run_opencode_batch(
     concurrency: int = 1,
     limit: int | None = None,
     dry_run: bool = False,
+    kb_path: str | Path | None = None,
 ) -> dict[str, typing.Any]:
     if mode not in {"oracle", "closed-book"}:
         raise ValueError("mode must be 'oracle' or 'closed-book'")
@@ -134,6 +139,9 @@ def run_opencode_batch(
             "output": str(output),
         }
 
+    resolved_kb_path = kb_path or os.getenv("PD_KB_PATH")
+    kb = KnowledgeBase(resolved_kb_path) if resolved_kb_path else None
+
     run_id = uuid.uuid4().hex[:10]
     results: list[dict[str, typing.Any]] = []
 
@@ -147,6 +155,7 @@ def run_opencode_batch(
                     timeout=timeout,
                     run_id=run_id,
                     iteration=iteration,
+                    kb=kb,
                 )
             )
     else:
@@ -160,6 +169,7 @@ def run_opencode_batch(
                     timeout=timeout,
                     run_id=run_id,
                     iteration=iteration,
+                    kb=kb,
                 )
                 for case, iteration in jobs
             ]
@@ -185,4 +195,5 @@ def run_opencode_batch(
         "ok": ok,
         "errors": len(results) - ok,
         "output": str(output),
+        "kb_path": str(resolved_kb_path) if resolved_kb_path else None,
     }
